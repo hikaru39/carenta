@@ -1,0 +1,19 @@
+ja:
+  activerecord:
+    models:
+      user: 会員情報
+    attributes:
+      user:
+        name: ユーザー名
+        email: メールアドレス
+        last_name: 姓
+        first_name: 名
+        postal_code: 郵便番号
+        address1: 住所1
+        address2: 住所2
+        description: 自己紹介
+        administrator_flag: 管理フラグ
+    errors:
+      messages:
+        
+        

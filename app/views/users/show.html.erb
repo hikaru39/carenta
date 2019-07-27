@@ -1,0 +1,44 @@
+<% @page_title = "会員の詳細" %>
+
+<h1><%= @page_title %></h1>
+
+<div class="toolbar"><%= link_to "編集", [:edit, @user] %></div>
+
+<table class="attr">
+  <tr>
+    <th>ユーザー名</th>
+    <td><%= @user.name %></td>
+  </tr>
+  <tr>
+    <th>メールアドレス</th>
+    <td><%= @user.email %></td>
+  </tr>
+  <tr>
+    <th>姓</th>
+    <td><%= @user.last_name %></td>
+  </tr>
+  <tr>
+    <th>名</th>
+    <td><%= @user.first_name %></td>
+  </tr>
+  <tr>
+    <th>郵便番号</th>
+    <td><%= @user.postal_code %></td>
+  </tr>
+  <tr>
+    <th>住所1</th>
+    <td><%= @user.address1 %></td>
+  </tr>
+  <tr>
+    <th>住所2</th>
+    <td><%= @user.address2 %></td>
+  </tr>
+  <tr>
+    <th>自己紹介</th>
+    <td><%= @user.description %></td>
+  </tr>
+  <tr>
+    <th>管理フラグ</th>
+    <td><%= @user.administrator_flag? ? "○" : "ー" %></td>
+  </tr>
+</table>
