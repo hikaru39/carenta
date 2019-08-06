@@ -1,0 +1,50 @@
+<table class="attr">
+  <tr>
+    <th><%= tm User, :new_profile_picture %></th>
+    <td>
+      <% if @user.profile_picture.attached? %>
+        <%= image_tag @user.profile_picture.variant(resize: "128x128") %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= tm User, :name %></th>
+    <td><%= @user.name %></td>
+  </tr>
+  <tr>
+    <th><%= tm User, :email %></th>
+    <td><%= @user.email %></td>
+  </tr>
+  <tr>
+    <th><%= tm User, :last_name %></th>
+    <td><%= @user.last_name %></td>
+  </tr>
+  <tr>
+    <th><%= tm User, :first_name %></th>
+    <td><%= @user.first_name %></td>
+  </tr>
+  <tr>
+    <th><%= tm User, :postal_code %></th>
+    <td><%= @user.postal_code %></td>
+  </tr>
+  <tr>
+    <th><%= tm User, :prefecture %></th>
+    <td><%= @user.prefecture_id %></td>
+  </tr>
+  <tr>
+    <th><%= tm User, :address1 %></th>
+    <td><%= @user.address1 %></td>
+  </tr>
+  <tr>
+    <th><%= tm User, :address2 %></th>
+    <td><%= @user.address2 %></td>
+  </tr>
+  <tr>
+    <th><%= tm User, :description %></th>
+    <td><%= @user.description %></td>
+  </tr>
+  <tr>
+    <th><%= tm User, :administrator_flag %></th>
+    <td><%= @user.administrator_flag? ? "○" : "ー" %></td>
+  </tr>
+</table>

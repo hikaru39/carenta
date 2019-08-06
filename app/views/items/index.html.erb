@@ -1,0 +1,38 @@
+<% @page_title = "#{tm Item}一覧" %>
+<h1><%= @page_title %></h1>
+
+<%= form_tag :items, method: :get, class: "search" do %>
+  <%= text_field_tag "q", params[:q] %>
+  <%= submit_tag "検索" %>
+<% end %>
+
+<div class="toolbar"><%= link_to "#{tm Item}の新規登録", :new_item %></div>
+<% if @items.present? %>
+  <table class="list">
+    <thead>
+      <tr>
+        <th><%= tm Item, :name %></th>
+        <th><%= tm Item, :user_id %></th>
+        <th><%= tm Item, :point %></th>
+        <th><%= tm Item, :status %></th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @items.each do |item| %>
+        <tr>
+          <td><%= link_to item.name, item %></td>
+          <td><%= item.user.last_name + item.user.first_name %></td>
+          <td><%= item.point %></td>
+          <td><%= item.status_text %></td>
+          <td>
+            <%= link_to "編集", [:edit, item] %> |
+            <%= link_to "削除", item, method: :delete, data: { confirm: "本当に削除しますか？" } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>#{tm Item}情報がありません。</p>
+<% end %>

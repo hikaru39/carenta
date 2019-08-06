@@ -1,11 +1,6 @@
 class UsersController < ApplicationController
   def index
-    @users = User.order("id")
-  end
-    
-  def search
     @users = User.search(params[:q])
-    render "index"
   end
     
   def show
@@ -21,17 +16,17 @@ class UsersController < ApplicationController
   end
     
   def create
-    @user = User.new(params[:user])
+    @user = User.new(user_params)
     if @user.save
       redirect_to @user, notice: "会員を登録しました。"
     else
       render "new"
     end
   end
-    
+
   def update
     @user = User.find(params[:id])
-    @user.assign_attributes(params[:user])
+    @user.assign_attributes(user_params)
     if @user.save
       redirect_to @user, notice: "会員情報を更新しました。"
     else
@@ -43,5 +38,14 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
     redirect_to :users, notice: "会員を削除しました。"
+  end
+
+private
+  def user_params
+    attrs = [:id, :new_profile_picture, :remove_profile_picture, :name, :email, :first_name, :last_name, :postal_code, :prefecture_id, :address1, :address2, :description, :administrator_flag]
+    
+    attrs << :password if params[:action] == "create"
+    
+    params.require(:user).permit(attrs)
   end
 end

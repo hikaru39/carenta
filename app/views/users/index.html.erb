@@ -1,21 +1,20 @@
-<%= @page_title = "会員一覧" %>
+<%= @page_title = "#{tm User}一覧" %>
 <h1><%= @page_title %></h1>
 
-<%= form_tag :search_user, method: :get, class: "search" do %>
+<%= form_tag :users, method: :get, class: "search" do %>
   <%= text_field_tag "q", params[:q] %>
   <%= submit_tag "検索" %>
 <% end %>
 
-<div class="toolbar"><%= link_to "会員の新規登録", :new_user %></div>
+<div class="toolbar"><%= link_to "#{tm User}の新規登録", :new_user %></div>
 
 <% if @users.present? %>
   <table class="list">
     <thead>
       <tr>
-        <th>ユーザー名</th>
-        <th>メールアドレス</th>
-        <th>都道府県</th>
-        <th>管理フラグ</th>
+        <th><%= tm User, :name %></th>
+        <th><%= tm User, :email %></th>
+        <th><%= tm User, :administrator_flag %></th>
         <th>操作</th>
       </tr>
     </thead>
@@ -24,7 +23,6 @@
         <tr>
           <td><%= link_to user.name, user %></td>
           <td><%= user.email %></td>
-          <td><%= user.address1 %></td>
           <td><%= user.administrator_flag %></td>
           <td>
             <%= link_to "編集", [:edit, user] %>
@@ -36,5 +34,5 @@
     </tbody>
   </table>
 <% else %>
-  <p>会員情報がありません。</p>
+  <p>#{tm User}情報がありません。</p>
 <% end %>

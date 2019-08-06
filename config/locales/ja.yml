@@ -1,19 +1,43 @@
 ja:
   activerecord:
     models:
-      user: 会員情報
+      user: 会員
+      item: 商品
     attributes:
       user:
+        new_profile_picture: プロフィール画像
+        remove_profile_picture: 画像を削除
         name: ユーザー名
         email: メールアドレス
         last_name: 姓
         first_name: 名
         postal_code: 郵便番号
+        prefecture: 都道府県
         address1: 住所1
         address2: 住所2
         description: 自己紹介
         administrator_flag: 管理フラグ
+        current_password: 現在のパスワード
+        password: 新しいパスワード
+        password_confirmation: 新しいパスワードの確認
+      item:
+        name: 商品名
+        user_id: 出品者
+        point: ポイント
+        rental_point: レンタルポイント
+        category: カテゴリー
+        condition: 商品の状態
+        description: 商品説明
+        delivery_method: 発送情報
+        status: ステータス
     errors:
       messages:
-        
-        
+        wrong: が正しくありません。
+        invalid_image_type: にはJPEG、PNG、GIF、BMP形式の画像を指定してください。
+  enumerize:
+    item:
+      status:
+        hidden: 非表示
+        editing: 編集中
+        applying: 申請中
+        applied: 承認済み
