@@ -44,6 +44,10 @@
     <td><%= @user.description %></td>
   </tr>
   <tr>
+    <th>現在のポイント</th>
+    <td><%= @user.points.latest.first.point.to_s(:delimited) %></td>
+  </tr>
+  <tr>
     <th><%= tm User, :administrator_flag %></th>
     <td><%= @user.administrator_flag? ? "○" : "ー" %></td>
   </tr>

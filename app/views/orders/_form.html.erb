@@ -1,0 +1,28 @@
+<%= render "shared/errors", obj: @order %>
+
+<table class="attr">
+  <tr>
+    <th><%= form.label :item_id %></th>
+    <td><%= "#{@order.item}" %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :user_id %></th>
+    <td><%= "#{@order.user}" %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :type %></th>
+    <td><%= form.select :type, Order.type.options %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :status %></th>
+    <td><%= form.select :status, Order.status.options %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :rental_point %></th>
+    <td><%= "#{@order.item.rental_point}" %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :point %></th>
+    <td><%= "#{@order.item.point}" %></td>
+  </tr>
+</table>

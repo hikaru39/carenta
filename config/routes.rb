@@ -1,5 +1,17 @@
 Rails.application.routes.draw do
+  get 'orders/index'
+  get 'orders/show'
+  get 'orders/new'
+  get 'orders/edit'
+  get 'points/index'
+  get 'points/show'
+  get 'points/new'
+  get 'points/edit'
+  get 'item_images/index'
+  get 'item_images/new'
+  get 'item_images/edit'
   root 'top#index'
+  root 'items#index'
 
   get 'passwords/edit'
 
@@ -7,10 +19,22 @@ Rails.application.routes.draw do
 
   get 'accounts/edit'
 
-  resources :users
+  resources :users do
+    get "favorited", on: :member
+    resources :points, on: :member, only: [:index, :new, :create]
+    resources :orders
+  end
   
-  resources :items
+  resources :items do
+    patch "like", "unlike", on: :member
+    resources :images, controller: "item_images" do
+      patch :move_higher, :move_lower, on: :member
+    end
+    resources :comments, only: [:create]
+    resources :orders
+  end
   
+  resources :orders
   resource :session, only: [:create, :destroy]
   resource :account, only: [:show, :edit, :update]
   resource :password, only: [:show, :edit, :update]

@@ -1,0 +1,17 @@
+<% @page_title = "お気に入り商品" %>
+<h1><%= @page_title %></h1>
+
+<% if @items.present? %>
+  <ul>
+    <% @items.each do |item| %>
+    <li>
+      <%= link_to item.name, item %>
+      by <%= link_to item.user.name, items_path({user_id: item.user.id}) %>
+      - <%= link_to "削除", [:unlike, item], method: :patch, data: { confirm: "削除しますか？" } %>
+    </li>
+    <% end %>
+  </ul>
+  <%= paginate @items %>
+<% else %>
+  <p>商品がありません。</p>
+<% end %>

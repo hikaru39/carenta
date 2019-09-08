@@ -5,6 +5,12 @@ class User < ApplicationRecord
   has_secure_password
   
   has_many :items, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :favorited_items, through: :favorites, source: :item
+  has_many :comments, dependent: :destroy
+  has_many :commenters, through: :comments, source: :item
+  has_many :points, dependent: :destroy
+  has_many :orders, dependent: :destroy
   has_one_attached :profile_picture
   attribute :new_profile_picture
   attribute :remove_profile_picture, :boolean
@@ -35,8 +41,16 @@ class User < ApplicationRecord
     end
   end
   
+  after_create do
+    points.create!({ difference: 0, point: 0, processed_at: Time.current, category: "新規作成"})
+  end
+  
   def full_name
     last_name + first_name
+  end
+  
+  def favoritable_for?(item)
+    item && item.user != self && !favorites.exists?(item_id: item.id)
   end
   
   class << self

@@ -1,0 +1,29 @@
+<% @page_title = @order.item %>
+<h1><%= @order.item %></h1>
+
+<table class="attr">
+  <tr>
+    <th>商品情報</th>
+    <td><%= @order.item %></td>
+  </tr>
+  <tr>
+    <th>購入者</th>
+    <td><%= @order.user %></td>
+  </tr>
+  <tr>
+    <th>購入タイプ</th>
+    <td><%= @order.type %></td>
+  </tr>
+  <tr>
+    <th>購入状態</th>
+    <td><%= @order.status %></td>
+  </tr>
+  <tr>
+    <th>レンタルポイント</th>
+    <td><%= @order.rental_point %></td>
+  </tr>
+  <tr>
+    <th>購入ポイント</th>
+    <td><%= @order.point %></td>
+  </tr>
+</table>

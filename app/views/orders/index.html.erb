@@ -1,0 +1,28 @@
+<% @page_title = "注文履歴一覧" %>
+<h1><%= @page_title %></h1>
+
+<% if @orders.present? %>
+  <table class="list">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>商品情報</th>
+        <th>購入者</th>
+        <th>購入状態</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= link_to order.id, order %></td>
+          <td><%= link_to order.item.name, item %></td>
+          <td><%= order.user.last_name + order.user.first_name %></td>
+          <td><%= order.status %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>注文履歴がありません。</p>
+<% end %>
+
