@@ -25,7 +25,7 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     @order.user = current_user
     if @order.save
-      redirect_to @order, notice: "注文を完了しました。"
+      redirect_to @order, notice: "注文の作成が完了しました。"
     else
       render "new"
     end
