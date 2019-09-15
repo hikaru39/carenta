@@ -3,10 +3,13 @@
 
 <%= form_tag :items, method: :get, class: "search" do %>
   <%= text_field_tag "q", params[:q] %>
+  <%= select_tag :user_id, options_from_collection_for_select(User.all, :id, :name, params[:user_id]), include_blank: true %>
   <%= submit_tag "検索" %>
 <% end %>
 
-<div class="toolbar"><%= link_to "#{tm Item}の新規登録", :new_item %></div>
+<div class="toolbar">
+  <%= link_to "#{tm Item}の新規登録", :new_item %>
+</div>
 <% if @items.present? %>
   <table class="list">
     <thead>
@@ -27,12 +30,14 @@
           <td><%= item.status_text %></td>
           <td>
             <%= link_to "編集", [:edit, item] %> |
+            <%= link_to "画像", [item, :images] %> |
             <%= link_to "削除", item, method: :delete, data: { confirm: "本当に削除しますか？" } %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
+  <%= paginate @items %>
 <% else %>
   <p>#{tm Item}情報がありません。</p>
 <% end %>

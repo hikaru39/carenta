@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
+  before_action :login_required
+  
   def index
     @users = User.search(params[:q])
+      .page(params[:page]).per(20)
   end
     
   def show
@@ -38,6 +41,13 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
     redirect_to :users, notice: "会員を削除しました。"
+  end
+  
+  def favorited
+    @user = User.find(params[:id])
+    @items = @user.favorited_items
+      .order("favorites.created_at DESC")
+      .page(params[:page]).per(20)
   end
 
 private

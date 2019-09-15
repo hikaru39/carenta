@@ -4,6 +4,7 @@
   <ul class="account-menu">
     <%= menu_link_to current_user.name + "さん", :account %>
     <%= menu_link_to "ログアウト", :session, method: :delete, data: { confirm: "ログアウトしますか？" } %>
+    <%= link_to "お気に入り#{tm Item}", favorited_user_path(current_user.id) %>
   </ul>
 <% end %>
 

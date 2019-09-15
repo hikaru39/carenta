@@ -3,6 +3,7 @@ ja:
     models:
       user: 会員
       item: 商品
+      point: ポイント
     attributes:
       user:
         new_profile_picture: プロフィール画像
@@ -30,6 +31,21 @@ ja:
         description: 商品説明
         delivery_method: 発送情報
         status: ステータス
+      item_image:
+        data: 画像ファイル
+      point:
+        user_id: ユーザー名
+        point: 現在のポイント
+        difference: ポイントの増減
+        category: カテゴリー
+        processed_at: 処理日時
+      order:
+        item_id: 商品情報
+        user_id: 購入者
+        type: 購入タイプ
+        status: 購入状態
+        rental_point: レンタルポイント
+        point: 購入ポイント
     errors:
       messages:
         wrong: が正しくありません。
@@ -41,3 +57,10 @@ ja:
         editing: 編集中
         applying: 申請中
         applied: 承認済み
+    order:
+      status:
+        ordered: 発送待ち
+        delivered: 発送済み
+        received: 受け取り済み
+        returned: 返品済み
+        finished: 購入済み

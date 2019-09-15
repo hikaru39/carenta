@@ -39,12 +39,17 @@ gem 'active_hash'
 gem 'mini_magick', '~> 4.8'
 gem 'bootsnap'
 gem 'enumerize'
+gem 'acts_as_list'
+gem 'kaminari'
+gem 'kaminari-i18n'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'pry-rails'
+  gem 'pry-byebug'
 end
 
 group :development do

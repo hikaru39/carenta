@@ -2,7 +2,21 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   private 
    def current_user
-    User.find_by(id: session[:member_id]) if session[:user_id]
+    User.find_by(id: session[:user_id]) if session[:user_id]
    end
   helper_method :current_user
+  
+  class LoginRequired < StandardError; end
+   
+  rescue_from LoginRequired, with: :rescue_login_required
+  
+  private
+    def login_required
+      raise LoginRequired unless current_user
+    end
+    
+  private
+    def rescue_login_required(exception)
+      render "errors/login_required", status: 403, layout: "error",format: [:html]
+    end
 end
