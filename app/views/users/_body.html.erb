@@ -45,7 +45,7 @@
   </tr>
   <tr>
     <th>現在のポイント</th>
-    <td><%= @user.points.latest.first.point.to_s(:delimited) %></td>
+    <td><%= @user.latest_point.to_s(:delimited) %></td>
   </tr>
   <tr>
     <th><%= tm User, :administrator_flag %></th>

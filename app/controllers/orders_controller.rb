@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   def index
     if params[:user_id]
-      @user = User.find(params[:user_id])
+      @user = User.order(update_at: :desc)
       @orders = @user.orders
     else
       @orders = Order.all
@@ -25,9 +25,19 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     @order.user = current_user
     if @order.save
-      redirect_to @order, notice: "注文を登録しました。"
+      redirect_to @order, notice: "注文を完了しました。"
     else
       render "new"
+    end
+  end
+  
+  def update
+    @order = Order.find(params[:id])
+    @order.assign_attributes(order_params)
+    if @order.save
+      redirect_to @order, notice: "注文を更新しました。"
+    else
+      render "edit"
     end
   end
   

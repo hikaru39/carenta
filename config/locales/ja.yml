@@ -57,3 +57,10 @@ ja:
         editing: 編集中
         applying: 申請中
         applied: 承認済み
+    order:
+      status:
+        ordered: 発送待ち
+        delivered: 発送済み
+        received: 受け取り済み
+        returned: 返品済み
+        finished: 購入済み

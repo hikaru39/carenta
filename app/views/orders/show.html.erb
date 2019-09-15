@@ -4,11 +4,11 @@
 <table class="attr">
   <tr>
     <th>商品情報</th>
-    <td><%= @order.item %></td>
+    <td><%= link_to order.item.name, order.item_path %></td>
   </tr>
   <tr>
     <th>購入者</th>
-    <td><%= @order.user %></td>
+    <td><%= link_to order.user.last_name + order.user.first_name, order.user_path %></td>
   </tr>
   <tr>
     <th>購入タイプ</th>
@@ -25,5 +25,25 @@
   <tr>
     <th>購入ポイント</th>
     <td><%= @order.point %></td>
+  </tr>
+  <tr>
+    <th>発注日時</th>
+    <td><%= @order.ordered_at.strftime("%Y/%m/%d %H:%M") %></td>
+  </tr>
+  <tr>
+    <th>発送日時</th>
+    <td><%= @order.delivered_at.strftime("%Y/%m/%d %H:%M") %></td>
+  </tr>
+  <tr>
+    <th>受領日時</th>
+    <td><%= @order.received_at.strftime("%Y/%m/%d %H:%M") %></td>
+  </tr>
+  <tr>
+    <th>返却日時</th>
+    <td><%= @order.returned_at.strftime("%Y/%m/%d %H:%M") %></td>
+  </tr>
+  <tr>
+    <th>完了日時</th>
+    <td><%= @order.finished_at.strftime("%Y/%m/%d %H:%M") %></td>
   </tr>
 </table>

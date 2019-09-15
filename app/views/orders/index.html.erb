@@ -9,6 +9,8 @@
         <th>商品情報</th>
         <th>購入者</th>
         <th>購入状態</th>
+        <th>発注日時</th>
+        <th>完了日時</th>
       </tr>
     </thead>
     <tbody>
@@ -16,8 +18,10 @@
         <tr>
           <td><%= link_to order.id, order %></td>
           <td><%= link_to order.item.name, item %></td>
-          <td><%= order.user.last_name + order.user.first_name %></td>
+          <td><%= link_to order.user.last_name + order.user.first_name, user %></td>
           <td><%= order.status %></td>
+          <td><%= order.ordered_at.strftime("%Y/%m/%d %H:%M") %></td>
+          <td><%= order.finished_at.strftime("%Y/%m/%d %H:%M") %></td>
         </tr>
       <% end %>
     </tbody>

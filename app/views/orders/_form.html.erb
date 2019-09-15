@@ -11,7 +11,7 @@
   </tr>
   <tr>
     <th><%= form.label :type %></th>
-    <td><%= form.select :type, Order.type.options %></td>
+    <td><%= @order.type %></td>
   </tr>
   <tr>
     <th><%= form.label :status %></th>
@@ -19,10 +19,10 @@
   </tr>
   <tr>
     <th><%= form.label :rental_point %></th>
-    <td><%= "#{@order.item.rental_point}" %></td>
+    <td><%= "#{@order.rental_point}" %></td>
   </tr>
   <tr>
     <th><%= form.label :point %></th>
-    <td><%= "#{@order.item.point}" %></td>
+    <td><%= "#{@order.point}" %></td>
   </tr>
 </table>

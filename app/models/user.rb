@@ -49,6 +49,10 @@ class User < ApplicationRecord
     last_name + first_name
   end
   
+  def latest_point
+    points.latest.first.point
+  end
+  
   def favoritable_for?(item)
     item && item.user != self && !favorites.exists?(item_id: item.id)
   end

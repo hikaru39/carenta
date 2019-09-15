@@ -4,6 +4,13 @@ class Order < ApplicationRecord
   belongs_to :item
   belongs_to :user
   
-  enumerize :type, in: { rental: 0, buy: 1, rental_buy: 2 }, default: :rental_buy, scope: true
-  enumerize :status, in: { in_rental: 0, returned: 1, purchased: 2 }, default: :in_rental, scope: true
+  enumerize :status, in: { ordered: 0, delivered: 1, received: 2, returned: 3, finished: 4 }, default: :ordered, scope: true
+  
+  def type
+    if status.finished? && returned_at.nil? 
+      :buy
+    else
+      :rental
+    end
+  end
 end
