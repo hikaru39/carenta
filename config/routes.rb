@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   get 'accounts/edit'
 
-  resources :users do
+  resources :users, only: [:show, :new, :edit, :create, :update, :favorited] do
     get "favorited", on: :member
     resources :points, on: :member, only: [:index, :new, :create]
     resources :orders
@@ -44,6 +44,9 @@ Rails.application.routes.draw do
   
   namespace :admin do
     root "top#index"
+    resources :users do
+      get "search", on: :collection
+    end
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

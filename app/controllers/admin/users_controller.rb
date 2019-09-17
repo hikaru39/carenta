@@ -1,5 +1,10 @@
-class UsersController < ApplicationController
+class Admin::UsersController < Admin::Base
   before_action :login_required
+  
+  def index
+    @users = User.search(params[:q])
+      .page(params[:page]).per(20)
+  end
     
   def show
     @user = User.find(params[:id])
@@ -16,7 +21,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to @user, notice: "会員を登録しました。"
+      redirect_to [:admin, @user], notice: "会員を登録しました。"
     else
       render "new"
     end
@@ -26,10 +31,16 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.assign_attributes(user_params)
     if @user.save
-      redirect_to @user, notice: "会員情報を更新しました。"
+      redirect_to [:admin, @user], notice: "会員情報を更新しました。"
     else
       render "edit"
     end
+  end
+    
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    redirect_to :admin_users, notice: "会員を削除しました。"
   end
   
   def favorited

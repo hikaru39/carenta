@@ -1,10 +1,12 @@
-<%= @page_title = "#{tm User}一覧" %>
+<%= @page_title = "#{tm User}管理" %>
 <h1><%= @page_title %></h1>
 
-<%= form_tag :users, method: :get, class: "search" do %>
+<%= form_tag :search_admin_users, method: :get, class: "search" do %>
   <%= text_field_tag "q", params[:q] %>
   <%= submit_tag "検索" %>
 <% end %>
+
+<div class="toolbar"><%= link_to "#{tm User}の新規登録", :new_admin_user %></div>
 
 <% if @users.present? %>
   <table class="list">
@@ -13,14 +15,20 @@
         <th><%= tm User, :name %></th>
         <th><%= tm User, :email %></th>
         <th><%= tm User, :administrator_flag %></th>
+        <th>操作</th>
       </tr>
     </thead>
     <tbody>
       <% @users.each do |user| %>
         <tr>
-          <td><%= link_to user.name, user %></td>
+          <td><%= link_to user.name, [:admin, user] %></td>
           <td><%= user.email %></td>
           <td><%= user.administrator_flag %></td>
+          <td>
+            <%= link_to "編集", [:edit, :admin, user] %>
+            <%= link_to "削除", [:admin, user], method: :delete,
+                  data: { confirm: "本当に削除しますか？" } %>
+          </td>
         </tr>
       <% end %>
     </tbody>

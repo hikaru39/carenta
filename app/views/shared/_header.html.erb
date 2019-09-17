@@ -6,6 +6,11 @@
     <%= menu_link_to "ログアウト", :session, method: :delete, data: { confirm: "ログアウトしますか？" } %>
     <%= link_to "お気に入り#{tm Item}", favorited_user_path(current_user.id) %>
   </ul>
+<% else %>
+  <ul class="account-menu">
+    <%= link_to "新規登録", :new_user %>
+    <%= link_to "ログイン", :login_form %>
+  </ul>
 <% end %>
 
 <%= if controller.kind_of?(Admin::Base)
