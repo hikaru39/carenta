@@ -38,5 +38,9 @@ Rails.application.routes.draw do
   resource :session, only: [:create, :destroy]
   resource :account, only: [:show, :edit, :update]
   resource :password, only: [:show, :edit, :update]
+  
+  namespace :admin do
+    root "top#index"
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
