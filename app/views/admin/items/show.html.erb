@@ -1,0 +1,63 @@
+<% @page_title = "#{tm Item}の詳細" %>
+
+<h1><%= @page_title %></h1>
+
+<div class="toolbar"><%= link_to "編集", [:edit, :admin, @item] %></div>
+<%= render "footer", item: @item %>
+<%= render "favorites" %>
+<%= the_first_image(@item) %>
+<%= other_images(@item) %>
+<table class="attr">
+  <tr>
+    <th><%= tm Item, :name %></th>
+    <td><%= @item.name %></td>
+  </tr>
+  <tr>
+    <th><%= tm Item, :user_id %></th>
+    <td><%= @item.user_id %></td>
+  </tr>
+  <tr>
+    <th><%= tm Item, :point %></th>
+    <td><%= @item.point %></td>
+  </tr>
+  <tr>
+    <th><%= tm Item, :rental_point %></th>
+    <td><%= @item.rental_point %></td>
+  </tr>
+  <tr>
+    <th><%= tm Item, :category %></th>
+    <td><%= @item.category %></td>
+  </tr>
+  <tr>
+    <th><%= tm Item, :condition %></th>
+    <td><%= @item.condition %></td>
+  </tr>
+  <tr>
+    <th><%= tm Item, :description %></th>
+    <td><%= @item.description %></td>
+  </tr>
+  <tr>
+    <th><%= tm Item, :delivery_method %></th>
+    <td><%= @item.delivery_method %></td>
+  </tr>
+  <tr>
+    <th><%= tm Item, :status %></th>
+    <td><%= @item.status_text %></td>
+  </tr>
+</table>
+<h3>コメント一覧</h3>
+<% @comments.each do |c| %>
+  <div>
+    <a href="/users/<%= @item.user.id %>"><%= c.user.name %></a>
+    <%= c.content %>
+    <hr>
+  </div>
+<% end %>
+
+<%= form_for [@item, @comment] do |f| %>
+  <%= f.text_field :content %>
+  <br>
+  <%= f.submit 'コメントする' %>
+<% end %>
+
+<%= link_to "ホームへ戻る", items_path %>

@@ -1,0 +1,40 @@
+<%= render "shared/errors", obj: @item %>
+
+<table class="attr">
+  <tr>
+    <th><%= form.label :name %></th>
+    <td><%= form.text_field :name %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :user_id %></th>
+    <td><%= form.collection_select :user_id, User.all, :id, :full_name %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :point %></th>
+    <td><%= form.text_field :point %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :rental_point %></th>
+    <td><%= form.text_field :rental_point %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :category %></th>
+    <td><%= form.text_field :category %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :condition %></th>
+    <td><%= form.text_field :condition %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :description %></th>
+    <td><%= form.text_area :description %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :delivery_method %></th>
+    <td><%= form.text_field :delivery_method %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :status %></th>
+    <td><%= form.select :status, Item.status.options %></td>
+  </tr>
+</table>

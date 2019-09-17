@@ -1,6 +1,4 @@
-class ItemsController < ApplicationController
-  before_action :login_required, except: [:index, :show]
-  
+class Admin::ItemsController < Admin::Base
   def index
     @items = Item.search(params)
     
@@ -25,7 +23,7 @@ class ItemsController < ApplicationController
     @item = Item.new(item_params)
     @item.user = current_user
     if @item.save
-      redirect_to @item, notice: "商品を登録しました。"
+      redirect_to [:admin, @item], notice: "商品を登録しました。"
     else
       render "new"
     end
@@ -35,10 +33,16 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @item.assign_attributes(item_params)
     if @item.save
-      redirect_to @item, notice: "商品を更新しました。"
+      redirect_to [:admin, @item], notice: "商品を更新しました。"
     else
       render "edit"
     end
+  end
+  
+  def destroy
+    @item = Item.find(params[:id])
+    @item.destroy
+    redirect_to :admin_items, notice: "商品を削除しました。"
   end
   
   def like

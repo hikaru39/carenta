@@ -8,7 +8,7 @@
 <% end %>
 
 <div class="toolbar">
-  <%= link_to "#{tm Item}の新規登録", :new_item %>
+  <%= link_to "#{tm Item}の新規登録", :new_admin_item %>
 </div>
 <% if @items.present? %>
   <table class="list">
@@ -24,13 +24,14 @@
     <tbody>
       <% @items.each do |item| %>
         <tr>
-          <td><%= link_to item.name, item %></td>
+          <td><%= link_to item.name, [:admin, item] %></td>
           <td><%= item.user.last_name + item.user.first_name %></td>
           <td><%= item.point %></td>
           <td><%= item.status_text %></td>
           <td>
-            <%= link_to "編集", [:edit, item] %> |
-            <%= link_to "画像", [item, :images] %>
+            <%= link_to "編集", [:edit, :admin, item] %> |
+            <%= link_to "画像", [item, :images] %> |
+            <%= link_to "削除", [:admin, item], method: :delete, data: { confirm: "本当に削除しますか？" } %>
           </td>
         </tr>
       <% end %>

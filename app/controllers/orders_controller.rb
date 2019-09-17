@@ -1,4 +1,6 @@
 class OrdersController < ApplicationController
+  before_action :login_required
+  
   def index
     if params[:user_id]
       @user = User.order(update_at: :desc)

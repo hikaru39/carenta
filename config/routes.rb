@@ -22,13 +22,13 @@ Rails.application.routes.draw do
 
   get 'accounts/edit'
 
-  resources :users, only: [:show, :new, :edit, :create, :update, :favorited] do
+  resources :users, except: [:index, :destroy] do
     get "favorited", on: :member
     resources :points, on: :member, only: [:index, :new, :create]
     resources :orders
   end
   
-  resources :items do
+  resources :items, expect: [:destroy] do
     patch "like", "unlike", on: :member
     resources :images, controller: "item_images" do
       patch :move_higher, :move_lower, on: :member
@@ -47,6 +47,7 @@ Rails.application.routes.draw do
     resources :users do
       get "search", on: :collection
     end
+    resources :items
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

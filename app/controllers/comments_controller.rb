@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  before_action :login_required
+  
   def create
     item = Item.find_by(id: params[:item_id])
     @comment = item.comments.new(comment_params)
