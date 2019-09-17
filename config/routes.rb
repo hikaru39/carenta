@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get 'top/index'
+  end
   get 'orders/index'
   get 'orders/show'
   get 'orders/new'
