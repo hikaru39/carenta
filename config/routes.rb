@@ -37,7 +37,6 @@ Rails.application.routes.draw do
     resources :orders
   end
   
-  resources :orders
   resource :session, only: [:create, :destroy]
   resource :account, only: [:show, :edit, :update]
   resource :password, only: [:show, :edit, :update]
@@ -46,9 +45,12 @@ Rails.application.routes.draw do
     root "top#index"
     resources :users do
       get "search", on: :collection
+      resources :orders
+      resources :points
     end
-    resources :items
-    resources :orders
+    resources :items do
+      resources :orders
+    end
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

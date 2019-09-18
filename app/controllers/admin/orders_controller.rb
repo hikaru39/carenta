@@ -1,4 +1,4 @@
-class AdminOrdersController < Admin::Base
+class Admin::OrdersController < Admin::Base
   before_action :login_required
   
   def index
