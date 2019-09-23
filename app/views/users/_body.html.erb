@@ -47,8 +47,13 @@
     <th>現在のポイント</th>
     <td><%= @user.latest_point.to_s(:delimited) %></td>
   </tr>
-  <tr>
-    <th><%= tm User, :administrator_flag %></th>
-    <td><%= @user.administrator_flag? ? "○" : "ー" %></td>
-  </tr>
+  <% if current_user&.administrator_flag? %>
+    <tr>
+      <th><%= User.human_attribute_name(:administrator_flag) %></th>
+      <td>
+        <%= tm User, :administrator_flag %>
+        <%= @user.administrator_flag? ? "○" : "ー" %>
+      </td>
+    </tr>
+  <% end %>
 </table>

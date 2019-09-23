@@ -1,5 +1,11 @@
 class UsersController < ApplicationController
-  before_action :login_required
+  before_action :login_required, expect: [:index, :destroy]
+  before_action :admin_login_required, only: [:index, :destroy]
+
+  def index
+    @users = User.search(params[:q])
+      .page(params[:page]).per(20)
+  end
     
   def show
     @user = User.find(params[:id])
@@ -30,6 +36,12 @@ class UsersController < ApplicationController
     else
       render "edit"
     end
+  end
+    
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    redirect_to :admin_users, notice: "会員を削除しました。"
   end
   
   def favorited

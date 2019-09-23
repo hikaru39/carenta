@@ -10,10 +10,13 @@ class ApplicationController < ActionController::Base
    
   rescue_from LoginRequired, with: :rescue_login_required
   
-  private
-    def login_required
-      raise LoginRequired unless current_user
-    end
+  def login_required
+    raise LoginRequired unless current_user
+  end
+  
+  def admin_login_required
+    raise Forbidden unless current_user&.administrator_flag?
+  end
     
   private
     def rescue_login_required(exception)
