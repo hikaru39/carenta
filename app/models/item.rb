@@ -15,7 +15,7 @@ class Item < ApplicationRecord
     def search(params)
       rel = order("id")
       if params[:q].present?
-        rel = rel.where("name LIKE ?", "%#{params[:q]}%")
+        rel = rel.where("name LIKE ? OR category LIKE ?", "%#{params[:q]}%", "%#{params[:q]}%")
       end
       if params[:user_id].present?
         rel = rel.where(user_id: params[:user_id])

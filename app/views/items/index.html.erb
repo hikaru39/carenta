@@ -3,7 +3,9 @@
 
 <%= form_tag :items, method: :get, class: "search" do %>
   <%= text_field_tag "q", params[:q] %>
-  <%= select_tag :user_id, options_from_collection_for_select(User.all, :id, :name, params[:user_id]), include_blank: true %>
+  <% if current_user&.administrator_flag? %>
+    <%= select_tag :user_id, options_from_collection_for_select(User.all, :id, :name, params[:user_id]), include_blank: true %>
+  <% end %>
   <%= submit_tag "検索" %>
 <% end %>
 
@@ -17,21 +19,29 @@
         <th><%= tm Item, :name %></th>
         <th><%= tm Item, :user_id %></th>
         <th><%= tm Item, :point %></th>
-        <th><%= tm Item, :status %></th>
-        <th>操作</th>
+        <% if current_user&.administrator_flag? %>
+          <th><%= tm Item, :status %></th>
+          <th>操作</th>
+        <% end %>
       </tr>
     </thead>
     <tbody>
       <% @items.each do |item| %>
         <tr>
           <td><%= link_to item.name, item %></td>
-          <td><%= item.user.last_name + item.user.first_name %></td>
+          <% if current_user&.administrator_flag? %>
+            <td><%= item.user.last_name + item.user.first_name %></td>
+          <% else %>
+            <td><%= item.user.name %></td>
+          <% end %>
           <td><%= item.point %></td>
-          <td><%= item.status_text %></td>
-          <td>
-            <%= link_to "編集", [:edit, item] %> |
-            <%= link_to "画像", [item, :images] %>
-          </td>
+          <% if current_user&.administrator_flag? %>
+            <td><%= item.status_text %></td>
+            <td>
+              <%= link_to "編集", [:edit, item] %> |
+              <%= link_to "画像", [item, :images] %>
+            </td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>

@@ -7,7 +7,7 @@
   </tr>
   <tr>
     <th><%= form.label :user_id %></th>
-    <td><%= form.collection_select :user_id, User.all, :id, :full_name %></td>
+    <td><%= form.label @item.user.name %></td>
   </tr>
   <tr>
     <th><%= form.label :point %></th>

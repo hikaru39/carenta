@@ -29,7 +29,7 @@
   </tr>
   <tr>
     <th><%= tm User, :prefecture %></th>
-    <td><%= @user.prefecture_id %></td>
+    <td><%= @user.prefecture.name %></td>
   </tr>
   <tr>
     <th><%= tm User, :address1 %></th>
@@ -51,7 +51,6 @@
     <tr>
       <th><%= User.human_attribute_name(:administrator_flag) %></th>
       <td>
-        <%= tm User, :administrator_flag %>
         <%= @user.administrator_flag? ? "○" : "ー" %>
       </td>
     </tr>

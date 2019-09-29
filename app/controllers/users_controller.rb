@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :login_required, expect: [:index, :destroy]
   before_action :admin_login_required, only: [:index, :destroy]
-
+  
   def index
     @users = User.search(params[:q])
       .page(params[:page]).per(20)
