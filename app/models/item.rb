@@ -2,6 +2,7 @@ class Item < ApplicationRecord
   extend Enumerize
   
   belongs_to :user, class_name: "User", foreign_key: "user_id"
+  belongs_to :category
   has_many :images, class_name: "ItemImage"
   has_many :favorites, dependent: :destroy
   has_many :favoriters, through: :favorites, source: :user
