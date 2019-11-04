@@ -9,67 +9,67 @@
   </head>
 
   <body>
-    <div id="container">
+    <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-1 col-md-2"></div>
-        <div class="col-sm-10 col-md-8">
+        <div class="d-none d-lg-block col-lg-1 col-xl-2"></div>
+        <div class="col-12 col-lg-10 col-xl-8">
           <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-          
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
+            <div class="row" style="width:100%">
+              <div class="col-2 col-lg-1">
+                <a class="navbar-brand" href=/>Carenta</a>
+              </div>
+              <div class="col-10 col-lg-6">
+                <div class="btn-group pl-3">
+                  <a class="btn btn-outline-primary" href=/items/category_index role="button">カテゴリー検索</a>
+                </div>
+                <% if current_user %>
+                  <div class="btn-group pl-2">
+                    <a class="btn btn-outline-primary" href=/account role="button">マイページ</a>
                   </div>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link disabled" href="#">Disabled</a>
-                </li>
-              </ul>
-              <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-              </form>
+                <% else %>
+                  <div class="btn-group px-1 px-lg-2">
+                    <a class="btn btn-danger" href=/users/new role="button">新規会員</a>
+                  </div>
+                  <div class="btn-group">
+                    <%= form_tag :session, method: :create do %>
+                      <a class="btn btn-outline-primary" href=/login role="button">ログイン</a>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+              <div class="col-12 col-lg-5 ml-2 ml-lg-0 pr-0">
+                <%= form_tag :items, method: :get, class: "search" do %>
+                  <div class="row" style="width:100%">
+                    <%= text_field_tag "q",params[:q], class: "form-control col-10", :placeholder => "検索" %>
+                    <button class="btn btn-outline-success col-2" type="submit">検索</button>
+                  </div>
+                <% end %>
+              </div>
             </div>
           </nav>
         </div>
-        <div class="col-sm-1 col-md-2"></div>
+        <div class="d-none d-lg-block col-lg-1 col-xl-2"></div>
       </div>
-      <header>
-        <%= render "shared/header" %>
-      </header>
-      <main>
-        <% if flash[:notice] %>
-          <div class="alert alert-success">
-            <%= flash[:notice] %>
-          </div>
-        <% elsif flash[:alert] %>
-          <div class="alert alert-danger">
-            <%= flash[:alert] %>
-          </div>
-        <% end %>
-        
-        <%= yield %>
+    </div>
+    
+    <div id="container">
+      <main class="row">
+        <div class="d-none d-lg-block col-lg-1 col-xl-2"></div>
+        <div class="col-12 col-lg-10 col-xl-8 px-5">
+          <% if flash[:notice] %>
+            <div class="alert alert-success">
+              <%= flash[:notice] %>
+            </div>
+          <% elsif flash[:alert] %>
+            <div class="alert alert-danger">
+              <%= flash[:alert] %>
+            </div>
+          <% end %>
+          
+          <%= yield %>
+        </div>
+        <div class="d-none d-lg-block col-lg-1 col-xl-2"></div>
       </main>
-      <footer>
-        <%= render "shared/footer" %>
-      </footer>
     </div>
   </body>
 </html>

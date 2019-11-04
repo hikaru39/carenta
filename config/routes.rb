@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get 'passwords/edit'
   get 'accounts/show'
   get 'accounts/edit'
+  get "login" => "users#login_form"
+  post "login" => "users#login"
 
   get 'item_images/index'
   get 'item_images/new'
@@ -13,6 +15,8 @@ Rails.application.routes.draw do
     get "favorited", on: :member
     resources :points, on: :member, only: [:index, :new, :create]
   end
+  
+  resources :points
 
   resources :items, expect: [:destroy] do
     patch "like", "unlike", on: :member
@@ -20,7 +24,15 @@ Rails.application.routes.draw do
       patch :move_higher, :move_lower, on: :member
     end
     resources :comments, only: [:create]
+    collection do
+      get 'category_index'
+      get 'get_category_children', defaults: { format: 'json' }
+      get 'get_category_grandchildren', defaults: { format: 'json' }
+    end
   end
+  
+  resources :consumers, expect: [:destroy]
+  resources :providers, only: [:index, :edit, :update]
   
   resource :session, only: [:create, :destroy]
   resource :account, only: [:show, :edit, :update]

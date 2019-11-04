@@ -7,8 +7,10 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   
   class LoginRequired < StandardError; end
+  class Forbidden < StandardError; end
    
   rescue_from LoginRequired, with: :rescue_login_required
+  rescue_from Forbidden, with: :rescue_forbidden
   
   def login_required
     raise LoginRequired unless current_user
@@ -21,5 +23,9 @@ class ApplicationController < ActionController::Base
   private
     def rescue_login_required(exception)
       render "errors/login_required", status: 403, layout: "error",format: [:html]
+    end
+    
+    def rescue_forbidden(exception)
+      render "errors/login_required", status: 401, layout: "error",format: [:html]
     end
 end

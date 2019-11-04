@@ -5,6 +5,15 @@
 <ul class="toolbar">
   <%= menu_link_to "アカウント情報の編集", :edit_account %>
   <%= menu_link_to "パスワードの変更", :edit_password %>
+  <%= menu_link_to "商品を出品する", :new_item %>
+  <%= menu_link_to "お気に入り商品", favorited_user_path(current_user.id) %>
+  <%= menu_link_to "ログアウト", :session, method: :delete, data: { confirm: "ログアウトしますか？" } %>
 </ul>
+
+<%= if controller.kind_of?(Admin::Base)
+      render "shared/admin_menubar"
+    else
+      render "shared/menubar"
+    end %>
 
 <%= render "users/body" %>

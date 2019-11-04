@@ -16,12 +16,12 @@
     <tbody>
       <% @orders.each do |order| %>
         <tr>
-          <td><%= link_to order.id, order %></td>
-          <td><%= link_to order.item.name, item %></td>
-          <td><%= link_to order.user.last_name + order.user.first_name, user %></td>
+          <td><%= link_to order.id, [:admin, order] %></td>
+          <td><%= link_to order.item.name, order.item %></td>
+          <td><%= link_to order.user.last_name + order.user.first_name, order.user %></td>
           <td><%= order.status %></td>
-          <td><%= order.ordered_at.strftime("%Y/%m/%d %H:%M") %></td>
-          <td><%= order.finished_at.strftime("%Y/%m/%d %H:%M") %></td>
+          <td><%= order.ordered_at&.strftime("%Y/%m/%d %H:%M") %></td>
+          <td><%= order.finished_at&.strftime("%Y/%m/%d %H:%M") %></td>
         </tr>
       <% end %>
     </tbody>

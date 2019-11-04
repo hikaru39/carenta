@@ -23,7 +23,7 @@
   </tr>
   <tr>
     <th><%= tm Item, :category %></th>
-    <td><%= @item.category %></td>
+    <td><%= @item.category.present? ? "#{@item.category.root.name} / #{@item.category.parent.name} / #{@item.category.name}" : "未指定" %></td>
   </tr>
   <tr>
     <th><%= tm Item, :condition %></th>
@@ -37,7 +37,7 @@
     <th><%= tm Item, :delivery_method %></th>
     <td><%= @item.delivery_method %></td>
   </tr>
-  <% if current_user&.administrator_flag? || current_user.id == @item.user_id %>
+  <% if current_user&.administrator_flag? || current_user == @item.user %>
     <tr>
       <th><%= tm Item, :status %></th>
       <td><%= @item.status_text %></td>
@@ -59,5 +59,6 @@
   <%= f.submit 'コメントする' %>
 <% end %>
 <%= render "footer", item: @item %>
+<%= render "order_button" %>
 <%= render "favorites" %>
 <%= link_to "ホームへ戻る", items_path %>

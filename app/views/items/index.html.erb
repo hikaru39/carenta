@@ -1,52 +1,116 @@
 <% @page_title = "#{tm Item}一覧" %>
 <h1><%= @page_title %></h1>
 
-<%= form_tag :items, method: :get, class: "search" do %>
-  <%= text_field_tag "q", params[:q] %>
-  <% if current_user&.administrator_flag? %>
-    <%= select_tag :user_id, options_from_collection_for_select(User.all, :id, :name, params[:user_id]), include_blank: true %>
+<nav aria-label="breadcrumb">
+  <%
+    category_params = @search_params.clone
+    category_params.delete(:parent_id)
+    category_params.delete(:child_id)
+    category_params.delete(:category_id)
+    category_url = items_path(category_params)
+    if category_params.size > 0
+      category_url += '&'
+    else
+      category_url += '?'
+    end
+  %>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to 'カテゴリー一覧', category_index_items_path %></li>
+    <% if params[:parent_id].present? %>
+      <%
+        parent = Category.find_by(id: params[:parent_id])
+      %>
+      <li class="breadcrumb-item active" aria-current="page"><%= parent.name %></li>
+      <li class="breadcrumb-item" aria-current="page">
+        <%= select_tag :child_id, options_for_select(parent.children.map {|c| [c.name, c.id] }), {prompt: 'すべて'} %>
+      </li>
+      <script>
+        $('#child_id').on('change', function() {
+          var id = $(this).val();
+          if (id > 0) {
+            window.location.href = "<%= category_url.html_safe %>child_id=" + id;
+          }
+        });
+      </script>
+    <% elsif params[:child_id].present? %>
+      <%
+        child = Category.find_by(id: params[:child_id])
+      %>
+      <li class="breadcrumb-item"><%= link_to child.root.name, items_path(category_params.merge({parent_id: child.root.id})) %></li>
+      <li class="breadcrumb-item active" aria-current="page"><%= child.name %></li>
+      <li class="breadcrumb-item" aria-current="page">
+        <%= select_tag :category_id, options_for_select(child.children.map {|c| [c.name, c.id] }), {prompt: 'すべて'} %>
+      </li>
+      <script>
+        $('#category_id').on('change', function() {
+          var id = $(this).val();
+          if (id > 0) {
+            window.location.href = "<%= category_url.html_safe %>category_id=" + id;
+          }
+        });
+      </script>
+    <% elsif params[:category_id].present? %>
+      <%
+        category = Category.find_by(id: params[:category_id])
+      %>
+      <li class="breadcrumb-item"><%= link_to category.root.name, items_path(category_params.merge({parent_id: category.root.id})) %></li>
+      <li class="breadcrumb-item"><%= link_to category.parent.name, items_path(category_params.merge({child_id: category.parent.id})) %></li>
+      <li class="breadcrumb-item active" aria-current="page"><%= category.name %></li>
+    <% end %>
+  </ol>
+</nav>
+
+<%= select_tag :option, options_for_select(order_options, @search_params[:option]), { onchange: 'myfunc(this.value);'} %>
+<%
+  order_params = @search_params.clone
+  order_params.delete(:option)
+  order_url = items_path(order_params)
+  if order_params.size > 0
+    order_url += '&option='
+  else
+    order_url += '?option='
+  end
+%>
+<script type="text/javascript">
+    function myfunc(value) {
+      window.location.replace('<%= order_url.html_safe %>' + value);
+    }
+</script>
+
+<% if current_user&.administrator_flag? %> 
+  <%= form_tag :items, method: :get, class: "search" do %>
+    <%= text_field_tag "q", params[:q] %>
+    <% if current_user&.administrator_flag? %>
+      <%= select_tag :user_id, options_from_collection_for_select(User.all, :id, :name, params[:user_id]), include_blank: true %>
+    <% end %>
+    <%= submit_tag "検索" %>
   <% end %>
-  <%= submit_tag "検索" %>
 <% end %>
 
-<div class="toolbar">
-  <%= link_to "#{tm Item}の新規登録", :new_item %>
-</div>
 <% if @items.present? %>
-  <table class="list">
-    <thead>
-      <tr>
-        <th><%= tm Item, :name %></th>
-        <th><%= tm Item, :user_id %></th>
-        <th><%= tm Item, :point %></th>
-        <% if current_user&.administrator_flag? %>
-          <th><%= tm Item, :status %></th>
-          <th>操作</th>
-        <% end %>
-      </tr>
-    </thead>
-    <tbody>
+  <div class="container">
+    <div class="row">
       <% @items.each do |item| %>
-        <tr>
-          <td><%= link_to item.name, item %></td>
-          <% if current_user&.administrator_flag? %>
-            <td><%= item.user.last_name + item.user.first_name %></td>
-          <% else %>
-            <td><%= item.user.name %></td>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 py-1 d-inline-flex flex-wrap">
+          <%= link_to item, class: "text-dark", target:"_blank" do %>
+            <div class="card" style="width: 200px;">
+              <% if item.images.first&.data&.attached? %>
+                <%= image_tag(item.images.first.data, :size => "180x180") %>
+              <% else %>
+                <%= image_tag("no_image.png", :size => "190x190") %>
+              <% end %>
+              <div class="card-body">
+                <h5 class="card-title"><%= item.point %></h5>
+                <p class="card-text"><%= item.name %></p>
+              </div>
+            </div>
           <% end %>
-          <td><%= item.point %></td>
-          <% if current_user&.administrator_flag? %>
-            <td><%= item.status_text %></td>
-            <td>
-              <%= link_to "編集", [:edit, item] %> |
-              <%= link_to "画像", [item, :images] %>
-            </td>
-          <% end %>
-        </tr>
+        </div>
       <% end %>
-    </tbody>
-  </table>
+    </div>
+  </div>
   <%= paginate @items %>
 <% else %>
-  <p>#{tm Item}情報がありません。</p>
+  <p>商品情報がありません。</p>
 <% end %>
+

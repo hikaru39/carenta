@@ -19,7 +19,27 @@
   </tr>
   <tr>
     <th><%= form.label :category %></th>
-    <td><%= form.text_field :category %></td>
+    <td>
+      <div class="listing-item-detail__category">
+        <div class="listing-select-wrapper listing-select-wrapper__box">
+          <%= form.select :category, options_for_select(@category_parent_array, @item.category&.root&.id), {prompt: '---'}, {class: 'listing-select-wrapper__box--select', id: 'parent_category'} %>
+        </div>
+        <% if @item.category.present? %>
+          <div class='listing-select-wrapper__added' id= 'children_wrapper'>
+            <div class='listing-select-wrapper__box'>
+              <%= form.select :category, options_for_select(Category.get_children(@item.category.root.id).map { |c| [c.name, c.id]}, @item.category.parent.id), {prompt: '---'}, {class: 'listing-select-wrapper__box--select', id: 'child_category'} %>
+              <i class='fas fa-chevron-down listing-select-wrapper__box--arrow-down'></i>
+            </div>
+          </div>
+          <div class='listing-select-wrapper__added' id= 'grandchildren_wrapper'>
+            <div class='listing-select-wrapper__box'>
+              <%= form.select :category_id, options_for_select(Category.get_grandchildren(@item.category.parent.id).map { |c| [c.name, c.id]}, @item.category.id), {prompt: '---'}, {class: 'listing-select-wrapper__box--select', id: 'grandchild_category'} %>
+              <i class='fas fa-chevron-down listing-select-wrapper__box--arrow-down'></i>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </td>
   </tr>
   <tr>
     <th><%= form.label :condition %></th>

@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
     else
-      flash.alert = "名前とパスワードが一致しません"
+      flash.alert = "メールアドレスとパスワードが一致しません"
     end
     redirect_to :root
   end
