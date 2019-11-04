@@ -1,4 +1,6 @@
-class OrdersController < ApplicationController
+class Admin::OrdersController < Admin::Base
+  before_action :login_required
+  
   def index
     if params[:user_id]
       @user = User.order(update_at: :desc)
@@ -25,7 +27,7 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     @order.user = current_user
     if @order.save
-      redirect_to @order, notice: "注文の作成が完了しました。"
+      redirect_to [:admin, @order], notice: "注文の作成が完了しました。"
     else
       render "new"
     end
@@ -35,7 +37,7 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @order.assign_attributes(order_params)
     if @order.save
-      redirect_to @order, notice: "注文を更新しました。"
+      redirect_to [:admin, @order], notice: "注文を更新しました。"
     else
       render "edit"
     end

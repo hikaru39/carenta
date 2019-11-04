@@ -56,7 +56,7 @@
     <th><%= form.label :description %></th>
     <td><%= form.text_area :description %></td>
   </tr>
-  <% if controller.kind_of?(UsersController) %>
+  <% if current_user&.administrator_flag? %>
     <tr>
       <th><%= User.human_attribute_name(:administrator_flag) %></th>
       <td>

@@ -1,0 +1,32 @@
+<% @page_title = "カテゴリー一覧" %>
+<h1><%= @page_title %></h1>
+
+<% @parents.each do |parent| %>
+  <%= link_to parent.name, "#parent_#{parent.id}", {class: "btn btn-light m-1"} %>
+<% end %>
+
+<% @parents.each do |parent| %>
+
+  <div class="card mt-2">
+    <div class="card-header" id="parent_<%= parent.id %>">
+      <%= link_to parent.name, items_path(parent_id: parent.id), class: "text-dark font-weight-bold" %>
+    </div>
+    <div class="card-body">
+      <% parent.children.each do |child| %>
+        <div style="border-bottom:SOLID 1px;" id="child_<%= child.id %>">
+          <%= link_to child.name, items_path(child_id: child.id), class: "text-secondary font-weight-bold pb-2" %>
+        </div>
+        
+        <div class="container">
+          <div class="row mb-2">
+            <% child.children.each do |grandchild| %>
+              <div class="col-6 mt-1">
+                <%= link_to grandchild.name, items_path(category_id: grandchild.id) %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

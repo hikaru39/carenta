@@ -1,0 +1,7 @@
+<% @page_title = "注文の新規登録" %>
+<h1><%= @page_title %></h1>
+
+<%= form_for [:admin, @order] do |form| %>
+  <%= render "form", form: form %>
+  <div><%= form.submit %></div>
+<% end %>

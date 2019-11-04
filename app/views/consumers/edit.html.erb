@@ -1,0 +1,95 @@
+<% @page_title = "レンタル・購入した商品の詳細" %>
+<h1><%= @page_title %></h1>
+
+<table class="attr">
+  <tr>
+    <th>商品情報</th>
+    <td><%= link_to @order.item.name, @order.item %></td>
+  </tr>
+  <tr>
+    <th>購入者</th>
+    <td><%= link_to @order.user.last_name + @order.user.first_name, @order.user %></td>
+  </tr>
+  <tr>
+    <th>購入タイプ</th>
+    <td><%= @order.type %></td>
+  </tr>
+  <tr>
+    <th>購入状態</th>
+    <td>
+        <% if @order.status.ordered? %>
+            <span>商品提供者の発送待ちです。</span>
+        <% elsif @order.status.delivered? %>
+            <span>商品提供者の発送が完了しました。</span>
+            <%= form_tag(consumer_path(id: @order.id), method: "put", class: "needs-validation") do %>
+                <%= hidden_field_tag(:status,  :received) %>
+                <%= submit_tag "商品が到着しました。試用を開始します。", class: "btn btn-danger" %>
+            <% end %>
+        <% elsif @order.status.received? %>
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">商品の試用を完了し、提供者に返却を行います。</div>
+                    <%= form_tag(consumer_path(id: @order.id), method: "put", class: "needs-validation") do %>
+                        <%= hidden_field_tag(:status,  :returned) %>
+                        <%= submit_tag "商品試用が完了しましたので、商品の返却手続きを行いました。", class: "btn btn-danger" %>
+                    <% end %>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">試用を完了し、そのまま商品の購入を行います。</div>
+                    <div class="card-text">
+                        購入には追加で <%= (@order.item.point - @order.item.rental_point).to_s(:delimited) %> ポイントが必要です。
+                    </div>
+                    <%= form_tag(consumer_path(id: @order.id), method: "put", class: "needs-validation") do %>
+                        <%= hidden_field_tag(:status,  :finished) %>
+                        <% if @order.user.latest_point >= (@order.item.point - @order.item.rental_point) %>
+                          <%= submit_tag "商品試用が完了しましたので、商品の購入手続きを行います。", class: "btn btn-danger" %>
+                        <% else %>
+                          <%= submit_tag "商品試用が完了しましたので、商品の購入手続きを行います。", disabled: true, class: "btn btn-disabling" %>
+                        <% end %>
+
+                    <% end %>
+                </div>
+            </div>
+        <% elsif @order.status.returned? %>
+            <span>商品提供者の受領待ちです。</span>
+        <% elsif @order.status.finished? %>
+            <% if @order.returned_at.nil? %>
+                <span>購入済みの商品です。そのままご使用いただけます。</span>
+            <% else %>
+                <span>商品提供者の受領が完了しました。ご利用ありがとうございました。</span>
+            <% end %>
+        <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th>レンタルポイント</th>
+    <td><%= @order.rental_point.to_s(:delimited) %></td>
+  </tr>
+  <tr>
+    <th>購入ポイント</th>
+    <td><%= @order.point.to_s(:delimited) %></td>
+  </tr>
+  <tr>
+    <th>発注日時</th>
+    <td><%= @order.ordered_at&.strftime("%Y/%m/%d %H:%M") %></td>
+  </tr>
+  <tr>
+    <th>発送日時</th>
+    <td><%= @order.delivered_at&.strftime("%Y/%m/%d %H:%M") %></td>
+  </tr>
+  <tr>
+    <th>受領日時</th>
+    <td><%= @order.received_at&.strftime("%Y/%m/%d %H:%M") %></td>
+  </tr>
+  <tr>
+    <th>返却日時</th>
+    <td><%= @order.returned_at&.strftime("%Y/%m/%d %H:%M") %></td>
+  </tr>
+  <tr>
+    <th>完了日時</th>
+    <td><%= @order.finished_at&.strftime("%Y/%m/%d %H:%M") %></td>
+  </tr>
+</table>

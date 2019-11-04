@@ -1,0 +1,25 @@
+<% @page_title = @point.user %>
+<h1><%= @point.user %></h1>
+
+<table class="attr">
+  <tr>
+    <th>ユーザー名</th>
+    <td><%= @point.user %></td>
+  </tr>
+  <tr>
+    <th>現在のポイント</th>
+    <td><%= @point.point %></td>
+  </tr>
+  <tr>
+    <th>ポイントの増減</th>
+    <td><%= @point.difference %></td>
+  </tr>
+  <tr>
+    <th>カテゴリー</th>
+    <td><%= @point.category %></td>
+  </tr>
+  <tr>
+    <th>処理日時</th>
+    <td><%= @point.processed_at.strftime("%Y/%m/%d %H:%M") %></td>
+  </tr>
+</table>

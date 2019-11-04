@@ -1,0 +1,65 @@
+<% @page_title = "レンタル・購入した商品の詳細" %>
+<h1><%= @page_title %></h1>
+
+<table class="attr">
+  <tr>
+    <th>商品情報</th>
+    <td><%= link_to @order.item.name, @order.item %></td>
+  </tr>
+  <tr>
+    <th>購入者</th>
+    <td><%= link_to @order.user.last_name + @order.user.first_name, @order.user %></td>
+  </tr>
+  <tr>
+    <th>購入タイプ</th>
+    <td><%= @order.type %></td>
+  </tr>
+  <tr>
+    <th>受注状態</th>
+    <td>
+        <% if @order.status.ordered? %>
+            <span>受注した商品の発送待ちです。</span>
+            <%= form_tag(provider_path(id: @order.id), method: "put", class: "needs-validation") do %>
+                <%= hidden_field_tag(:status,  :delivered) %>
+                <%= submit_tag "商品の発送を完了しました。", class: "btn btn-danger" %>
+            <% end %>
+        <% elsif @order.status.returned? %>
+            <span>ユーザーの試用期間が終了し、商品の発送が完了しました。</span>
+            <%= form_tag(provider_path(id: @order.id), method: "put", class: "needs-validation") do %>
+                <%= hidden_field_tag(:status,  :finished) %>
+                <%= submit_tag "商品の到着を確認しました。", class: "btn btn-danger" %>
+            <% end %>
+        <% else %>
+            <%= @order.status_text %>
+        <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th>レンタルポイント</th>
+    <td><%= @order.rental_point.to_s(:delimited) %></td>
+  </tr>
+  <tr>
+    <th>購入ポイント</th>
+    <td><%= @order.point.to_s(:delimited) %></td>
+  </tr>
+  <tr>
+    <th>発注日時</th>
+    <td><%= @order.ordered_at&.strftime("%Y/%m/%d %H:%M") %></td>
+  </tr>
+  <tr>
+    <th>発送日時</th>
+    <td><%= @order.delivered_at&.strftime("%Y/%m/%d %H:%M") %></td>
+  </tr>
+  <tr>
+    <th>受領日時</th>
+    <td><%= @order.received_at&.strftime("%Y/%m/%d %H:%M") %></td>
+  </tr>
+  <tr>
+    <th>返却日時</th>
+    <td><%= @order.returned_at&.strftime("%Y/%m/%d %H:%M") %></td>
+  </tr>
+  <tr>
+    <th>完了日時</th>
+    <td><%= @order.finished_at&.strftime("%Y/%m/%d %H:%M") %></td>
+  </tr>
+</table>

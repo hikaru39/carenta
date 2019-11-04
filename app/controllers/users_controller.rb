@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
-  before_action :login_required
+  before_action :login_required, expect: [:index, :destroy]
+  before_action :admin_login_required, only: [:index, :destroy]
+  skip_before_action :login_required, if: proc{action_name=="new" || action_name=="create" || action_name=="login_form"}
   
   def index
     @users = User.search(params[:q])
@@ -21,6 +23,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      session[:user_id] = @user.id unless current_user
       redirect_to @user, notice: "会員を登録しました。"
     else
       render "new"
@@ -48,6 +51,9 @@ class UsersController < ApplicationController
     @items = @user.favorited_items
       .order("favorites.created_at DESC")
       .page(params[:page]).per(20)
+  end
+  
+  def login_form
   end
 
 private

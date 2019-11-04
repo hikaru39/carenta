@@ -1,4 +1,4 @@
-<%= @page_title = "#{tm User}一覧" %>
+<%= @page_title = "#{tm User}管理" %>
 <h1><%= @page_title %></h1>
 
 <%= form_tag :users, method: :get, class: "search" do %>
@@ -14,6 +14,7 @@
       <tr>
         <th><%= tm User, :name %></th>
         <th><%= tm User, :email %></th>
+        <th>現在のポイント</th>
         <th><%= tm User, :administrator_flag %></th>
         <th>操作</th>
       </tr>
@@ -23,6 +24,7 @@
         <tr>
           <td><%= link_to user.name, user %></td>
           <td><%= user.email %></td>
+          <td><%= link_to user.latest_point.to_s(:delimited), {controller: 'points', action: 'index', user_id: @user} %></td>
           <td><%= user.administrator_flag %></td>
           <td>
             <%= link_to "編集", [:edit, user] %>

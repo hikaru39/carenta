@@ -1,0 +1,10 @@
+<div class="favorite">
+  <% @item.favoriters.order("favorites.created_at").each do |favoriter| %>
+    ♥<%= favoriter.name %>
+  <% end %>
+  
+  <% if current_user && current_user.favoritable_for?(@item) %>
+    <%= link_to "♥お気に入り", [:like, @item],
+      method: :patch, class: "button" %>
+  <% end %>
+</div>

@@ -3,8 +3,6 @@
     <% if current_user == item.user %>
       <%= menu_link_to "編集", [:edit, item] %>
       <%= menu_link_to "画像", [item, :images] %>
-      <%= menu_link_to "削除", item, method: :delete,
-            data: { confirm: "本当に削除しますか？" } %>
     <% end %>
   <% end %>
   <% if (count = item.favorites.count) > 0 %>

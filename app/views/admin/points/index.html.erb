@@ -1,0 +1,33 @@
+<% @page_title = "#{@user.full_name}さんのポイント履歴一覧" %>
+<h1><%= @page_title %></h1>
+
+<div class="toolbar">
+  <%= link_to "ポイントの新規登録", :new_admin_user_point %>
+</div>
+
+<% if @points.present? %>
+  <table class="list">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>現在のポイント</th>
+        <th>ポイントの増減</th>
+        <th>カテゴリー</th>
+        <th>処理日時</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @points.each do |point| %>
+        <tr>
+          <td><%= point.id %></td>
+          <td><%= point.point %></td>
+          <td><%= point.difference %></td>
+          <td><%= point.category %></td>
+          <td><%= point.processed_at.strftime("%Y/%m/%d %H:%M") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>ポイント履歴がありません。</p>
+<% end %>

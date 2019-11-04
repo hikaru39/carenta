@@ -9,26 +9,67 @@
   </head>
 
   <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="d-none d-lg-block col-lg-1 col-xl-2"></div>
+        <div class="col-12 col-lg-10 col-xl-8">
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="row" style="width:100%">
+              <div class="col-2 col-lg-1">
+                <a class="navbar-brand" href=/>Carenta</a>
+              </div>
+              <div class="col-10 col-lg-6">
+                <div class="btn-group pl-3">
+                  <a class="btn btn-outline-primary" href=/items/category_index role="button">カテゴリー検索</a>
+                </div>
+                <% if current_user %>
+                  <div class="btn-group pl-2">
+                    <a class="btn btn-outline-primary" href=/account role="button">マイページ</a>
+                  </div>
+                <% else %>
+                  <div class="btn-group px-1 px-lg-2">
+                    <a class="btn btn-danger" href=/users/new role="button">新規会員</a>
+                  </div>
+                  <div class="btn-group">
+                    <%= form_tag :session, method: :create do %>
+                      <a class="btn btn-outline-primary" href=/login role="button">ログイン</a>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+              <div class="col-12 col-lg-5 ml-2 ml-lg-0 pr-0">
+                <%= form_tag :items, method: :get, class: "search" do %>
+                  <div class="row" style="width:100%">
+                    <%= text_field_tag "q",params[:q], class: "form-control col-10", :placeholder => "検索" %>
+                    <button class="btn btn-outline-success col-2" type="submit">検索</button>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </nav>
+        </div>
+        <div class="d-none d-lg-block col-lg-1 col-xl-2"></div>
+      </div>
+    </div>
+    
     <div id="container">
-      <header>
-        <%= render "shared/header" %>
-      </header>
-      <main>
-        <% if flash[:notice] %>
-          <div class="alert alert-success">
-            <%= flash[:notice] %>
-          </div>
-        <% elsif flash[:alert] %>
-          <div class="alert alert-danger">
-            <%= flash[:alert] %>
-          </div>
-        <% end %>
-        
-        <%= yield %>
+      <main class="row">
+        <div class="d-none d-lg-block col-lg-1 col-xl-2"></div>
+        <div class="col-12 col-lg-10 col-xl-8 px-5">
+          <% if flash[:notice] %>
+            <div class="alert alert-success">
+              <%= flash[:notice] %>
+            </div>
+          <% elsif flash[:alert] %>
+            <div class="alert alert-danger">
+              <%= flash[:alert] %>
+            </div>
+          <% end %>
+          
+          <%= yield %>
+        </div>
+        <div class="d-none d-lg-block col-lg-1 col-xl-2"></div>
       </main>
-      <footer>
-        <%= render "shared/footer" %>
-      </footer>
     </div>
   </body>
 </html>

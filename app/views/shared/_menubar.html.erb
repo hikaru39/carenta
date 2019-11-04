@@ -1,0 +1,9 @@
+<nav class="menubar">
+  <ul>
+    <% if current_user %>
+      <% if current_user.administrator_flag? %>
+        <%= menu_link_to "管理ページ", :admin_root %>
+      <% end %>
+    <% end %>
+  </ul>
+</nav>

@@ -42,6 +42,7 @@ gem 'enumerize'
 gem 'acts_as_list'
 gem 'kaminari'
 gem 'kaminari-i18n'
+gem 'ancestry'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

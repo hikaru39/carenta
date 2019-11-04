@@ -1,0 +1,7 @@
+<% @page_title = "ポイントの新規登録" %>
+<h1><%= @page_title %></h1>
+
+<%= form_for [:admin, @point], :url => {:action => :create} do |form| %>
+  <%= render "form", form: form %>
+  <div><%= form.submit %></div>
+<% end %>

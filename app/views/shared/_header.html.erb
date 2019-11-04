@@ -1,18 +1,18 @@
-<%= image_tag "", size: "273x48", alt: "" %>
-
 <% if current_user %>
   <ul class="account-menu">
     <%= menu_link_to current_user.name + "さん", :account %>
     <%= menu_link_to "ログアウト", :session, method: :delete, data: { confirm: "ログアウトしますか？" } %>
     <%= link_to "お気に入り#{tm Item}", favorited_user_path(current_user.id) %>
   </ul>
+<% else %>
+  <ul class="account-menu">
+    <%= link_to "新規登録", :new_user %>
+    <%= render "shared/login_form" %>
+  </ul>
 <% end %>
 
-<nav class="menubar">
-  <ul>
-    <%= menu_link_to "TOP", :root %>
-    <%= menu_link_to "会員一覧", :users %>
-    <%= menu_link_to "商品一覧", :items %>
-    <%= menu_link_to "管理ページ", "#" %>
-  </ul>
-</nav>
+<%= if controller.kind_of?(Admin::Base)
+      render "shared/admin_menubar"
+    else
+      render "shared/menubar"
+    end %>

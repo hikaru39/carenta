@@ -1,4 +1,4 @@
-class PointsController < ApplicationController
+class Admin::PointsController < Admin::Base
   before_action :login_required
   before_action :set_user
   
@@ -29,13 +29,13 @@ class PointsController < ApplicationController
     @latest_point_id = params[:latest_point_id].to_i
     @latest_point = Point.where(user_id: @user.id).latest.first
     if @latest_point_id != @latest_point.id
-      return redirect_to ({:action => 'new'}), alert: "想定されていないポイントが追加されたため、登録に失敗しました。"
+      return redirect_to ({:admin_action => 'new'}), alert: "想定されていないポイントが追加されたため、登録に失敗しました。"
     end
     @point = Point.new(point_params)
     @point.point = @latest_point.point + @point.difference
     @point.processed_at = Time.current
     if @point.save
-      redirect_to ({:action => 'index'}), notice: "ポイントを登録しました。"
+      redirect_to ({:admin_action => 'index'}), notice: "ポイントを登録しました。"
     else
       render "new"
     end

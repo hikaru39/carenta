@@ -1,0 +1,31 @@
+<% @page_title = "受注履歴一覧" %>
+<h1><%= @page_title %></h1>
+
+<% if @orders.present? %>
+  <table class="list">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>商品情報</th>
+        <th>購入ユーザー</th>
+        <th>購入状態</th>
+        <th>発注日時</th>
+        <th>完了日時</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= link_to order.id, edit_provider_path(order.id) %></td>
+          <td><%= link_to order.item.name, order.item %></td>
+          <td><%= order.user.last_name + order.user.first_name %></td>
+          <td><%= order.status_text %></td>
+          <td><%= order.ordered_at&.strftime("%Y/%m/%d %H:%M") %></td>
+          <td><%= order.finished_at&.strftime("%Y/%m/%d %H:%M") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>受注履歴がありません。</p>
+<% end %>
