@@ -56,13 +56,10 @@
     <th><%= form.label :description %></th>
     <td><%= form.text_area :description %></td>
   </tr>
-  <% if current_user&.administrator_flag? %>
-    <tr>
-      <th><%= User.human_attribute_name(:administrator_flag) %></th>
-      <td>
-        <%= form.check_box :administrator_flag %>
-        <%= form.label :administrator_flag %>
-      </td>
-    </tr>
-  <% end %>
+  <tr>
+    <th><%= User.human_attribute_name(:administrator_flag) %></th>      <td>
+      <%= form.check_box :administrator_flag %>
+      <%= form.label :administrator_flag %>
+    </td>
+  </tr>
 </table>
