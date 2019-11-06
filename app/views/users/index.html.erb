@@ -24,7 +24,7 @@
         <tr>
           <td><%= link_to user.name, user %></td>
           <td><%= user.email %></td>
-          <td><%= link_to user.latest_point.to_s(:delimited), {controller: 'points', action: 'index', user_id: @user} %></td>
+          <td><%= link_to user.latest_point.to_s(:delimited), user_points_path(user_id: user.id) %></td>
           <td><%= user.administrator_flag %></td>
           <td>
             <%= link_to "編集", [:edit, user] %>
