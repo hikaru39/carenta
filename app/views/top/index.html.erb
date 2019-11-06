@@ -1,2 +1,29 @@
-<h1>Top#index</h1>
-<p>Find me in app/views/top/index.html.erb</p>
+<% @page_title = "TOP" %>
+
+<h1>新着商品一覧</h1>
+<% if @items.present? %>
+  <div class="container">
+    <div class="row">
+      <% @items.each do |item| %>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 py-1 d-inline-flex flex-wrap">
+          <%= link_to item, class: "text-dark", target:"_blank" do %>
+            <div class="card" style="width: 200px;">
+              <% if item.images.first&.data&.attached? %>
+                <%= image_tag(item.images.first.data, :size => "180x180") %>
+              <% else %>
+                <%= image_tag("no_image.png", :size => "190x190") %>
+              <% end %>
+              <div class="card-body">
+                <h5 class="card-title"><%= item.point %></h5>
+                <p class="card-text"><%= item.name %></p>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <%= paginate @items %>
+<% else %>
+  <p>商品情報がありません。</p>
+<% end %>
