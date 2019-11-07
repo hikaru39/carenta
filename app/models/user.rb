@@ -10,7 +10,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :commenters, through: :comments, source: :item
   has_many :points, dependent: :destroy
-  has_many :orders, dependent: :destroy
+  has_one :order, dependent: :destroy
   has_one_attached :profile_picture
   attribute :new_profile_picture
   attribute :remove_profile_picture, :boolean

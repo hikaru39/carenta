@@ -8,7 +8,7 @@ class Item < ApplicationRecord
   has_many :favoriters, through: :favorites, source: :user
   has_many :comments, dependent: :destroy
   has_many :commenters, through: :comments, source: :user
-  has_many :orders, dependent: :destroy
+  has_one :order, dependent: :destroy
   
   enumerize :status, in: { hidden: 0, editing: 1, applying: 2, applied: 3 }, default: :applying, scope: true
   

@@ -4,6 +4,7 @@ class ProvidersController < ApplicationController
   
   def index
     @orders = Order.joins(:item).merge(Item.where(user_id: current_user.id)).order(updated_at: :desc)
+    @items = Item.where(user_id: current_user.id).order(updated_at: :desc)
   end
   
   def show
