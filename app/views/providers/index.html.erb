@@ -1,31 +1,66 @@
 <% @page_title = "受注履歴一覧" %>
 <h1><%= @page_title %></h1>
-
-<% if @orders.present? %>
-  <table class="list">
-    <thead>
-      <tr>
-        <th>id</th>
-        <th>商品情報</th>
-        <th>購入ユーザー</th>
-        <th>購入状態</th>
-        <th>発注日時</th>
-        <th>完了日時</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @orders.each do |order| %>
-        <tr>
-          <td><%= link_to order.id, edit_provider_path(order.id) %></td>
-          <td><%= link_to order.item.name, order.item %></td>
-          <td><%= order.user.last_name + order.user.first_name %></td>
-          <td><%= order.status_text %></td>
-          <td><%= order.ordered_at&.strftime("%Y/%m/%d %H:%M") %></td>
-          <td><%= order.finished_at&.strftime("%Y/%m/%d %H:%M") %></td>
-        </tr>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-3">
+      <h2>出品した商品</h2>
+      <% if @items.present? %>
+        <table class="list">
+          <thead>
+            <tr>
+              <th>商品画像</th>
+              <th>商品情報</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @items.each do |item| %>
+              <tr>
+                <td>
+                  <% if item.images.first&.data&.attached? %>
+                    <%= image_tag(item.images.first.data, :size => "70x70") %>
+                  <% else %>
+                    <%= image_tag("no_image.png", :size => "70x70") %>
+                  <% end %>
+                </td>
+                <td><%= link_to item.name, item %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>受注履歴がありません。</p>
       <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <p>受注履歴がありません。</p>
-<% end %>
+    </div>
+    <div class="col-lg-9">
+      <h2>取引中又は取引終了した商品</h2>
+      <% if @orders.present? %>
+        <table class="list h-100 w-100">
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>商品情報</th>
+              <th>購入ユーザー</th>
+              <th>購入状態</th>
+              <th>発注日時</th>
+              <th>完了日時</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @orders.each do |order| %>
+              <tr>
+                <td><%= link_to order.id, edit_provider_path(order.id) %></td>
+                <td><%= link_to order.item.name, order.item %></td>
+                <td><%= order.user.last_name + order.user.first_name %></td>
+                <td><%= order.status_text %></td>
+                <td><%= order.ordered_at&.strftime("%Y/%m/%d %H:%M") %></td>
+                <td><%= order.finished_at&.strftime("%Y/%m/%d %H:%M") %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>受注履歴がありません。</p>
+      <% end %>
+    </div>
+  </div>
+</div>
