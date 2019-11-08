@@ -9,9 +9,9 @@
           <%= link_to item, class: "text-dark", target:"_blank" do %>
             <div class="card" style="width: 200px;">
               <% if item.images.first&.data&.attached? %>
-                <%= image_tag(item.images.first.data, :size => "180x180") %>
+                <%= image_tag(item.images.first.data, class: "card-img-top", :size => "200x200") %>
               <% else %>
-                <%= image_tag("no_image.png", :size => "190x190") %>
+                <%= image_tag("no_image.png", class: "card-img-top", :size => "200x200") %>
               <% end %>
               <div class="card-body">
                 <h5 class="card-title"><%= item.point %></h5>
