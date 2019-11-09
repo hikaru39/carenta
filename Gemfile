@@ -40,6 +40,7 @@ gem 'mini_magick', '~> 4.8'
 gem 'bootsnap'
 gem 'enumerize'
 gem 'acts_as_list'
+gem 'aws-sdk-s3', require: false
 gem 'kaminari'
 gem 'kaminari-i18n'
 gem 'ancestry'
