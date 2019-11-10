@@ -60,9 +60,9 @@
 <% end %>
 <%= render "footer", item: @item %>
 <% if @item.order.blank? %>
-　<%= render "order_button" %>
+  <%= render "order_button" %>
 <% else %>
   <h4>取引済み</h4>
-<% end %>　
+<% end %>
 <%= render "favorites" %>
 <%= link_to "ホームへ戻る", items_path %>
