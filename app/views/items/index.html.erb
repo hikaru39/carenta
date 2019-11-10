@@ -104,6 +104,13 @@
                 <p class="card-text"><%= item.name %></p>
               </div>
             </div>
+            <% if item.order.present? %>
+               <div class="items-box_photo__sold">
+                <div class="items-box_photo__sold__inner">
+                  SOLD
+                </div>
+              </div>
+            <% end %>
           <% end %>
         </div>
       <% end %>
