@@ -1,5 +1,5 @@
 <div class="order_button">
   <% if current_user %>
-    <%= link_to "この商品をレンタルする", new_consumer_path(item_id: @item.id), class: "button" %>
+    <%= link_to "この商品をレンタルする", new_consumer_path(item_id: @item.id), class: "button btn-danger h4" %>
   <% end %>
 </div>
