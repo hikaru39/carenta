@@ -17,7 +17,7 @@
         <tr>
           <td><%= link_to order.id, consumer_path(order.id) %></td>
           <td><%= link_to order.item.name, order.item %></td>
-          <td><%= order.status %></td>
+          <td><%= order.status_text %></td>
           <td><%= order.ordered_at&.strftime("%Y/%m/%d %H:%M") %></td>
           <td><%= order.finished_at&.strftime("%Y/%m/%d %H:%M") %></td>
         </tr>
