@@ -100,7 +100,12 @@
                 <%= image_tag("no_image.png", class: "card-img-top", :size => "200x200") %>
               <% end %>
               <div class="card-body">
-                <h5 class="card-title"><%= item.point %></h5>
+                <h5 class="card-title">
+                  <%= item.point %>
+                  <% if (count = item.favorites.count) > 0 %>
+                    <span class="favorite float-right">♥<%= count %></span>
+                  <% end %>
+                </h5>
                 <p class="card-text"><%= item.name %></p>
               </div>
             </div>
